@@ -7,12 +7,13 @@ use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Prints to be handed out
+ *
+ * This is a seperate class with a OneToOne relationship with Print so we can load it separately
  * @ORM\Entity()
  * @ORM\Table(name="print", options={"collate"="utf8mb4_unicode_ci", "charset"="utf8mb4"})
  */
-class Prints
+class PrintWithSourceCode
 {
-
     /**
      * @var int
      *
@@ -47,6 +48,12 @@ class Prints
 
     /**
      * @var string
+     * @ORM\Column(type="text", name="sourcecode", options={"comment"="Full source code"}, nullable=false)
+     */
+    private $sourcecode;
+
+    /**
+     * @var string
      * @ORM\Column(type="string", name="filename", length=255, options={"comment"="Filename as submitted"}, nullable=false)
      */
     private $filename;
@@ -58,6 +65,13 @@ class Prints
      * @Serializer\Exclude()
      */
     private $langid;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="prints")
+     * @ORM\JoinColumn(name="userid", referencedColumnName="userid", onDelete="CASCADE")
+     * @Serializer\Exclude()
+     */
+    private $user;
 
 
     /**
@@ -75,7 +89,7 @@ class Prints
      *
      * @param string $time
      *
-     * @return Prints
+     * @return PrintWithSourceCode
      */
     public function setTime($time)
     {
@@ -99,7 +113,7 @@ class Prints
      *
      * @param integer $userid
      *
-     * @return Prints
+     * @return PrintWithSourceCode
      */
     public function setUserid($userid)
     {
@@ -119,11 +133,35 @@ class Prints
     }
 
     /**
+     * Set user
+     *
+     * @param User $user
+     *
+     * @return Prints
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
      * Set done
      *
      * @param boolean $done
      *
-     * @return Prints
+     * @return PrintWithSourceCode
      */
     public function setDone($done)
     {
@@ -147,7 +185,7 @@ class Prints
      *
      * @param string $filename
      *
-     * @return Prints
+     * @return PrintWithSourceCode
      */
     public function setFilename($filename)
     {
@@ -167,11 +205,35 @@ class Prints
     }
 
     /**
+     * Set sourcecode
+     *
+     * @param string $sourcecode
+     *
+     * @return PrintWithSourceCode
+     */
+    public function setSourcecode($sourcecode)
+    {
+        $this->sourcecode = $sourcecode;
+
+        return $this;
+    }
+
+    /**
+     * Get sourcecode
+     *
+     * @return string
+     */
+    public function getSourcecode()
+    {
+        return $this->sourcecode;
+    }
+
+    /**
      * Set langid
      *
      * @param string $langid
      *
-     * @return Prints
+     * @return PrintWithSourceCode
      */
     public function setLangid($langid)
     {

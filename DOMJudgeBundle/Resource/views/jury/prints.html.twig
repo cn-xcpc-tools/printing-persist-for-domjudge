@@ -1,0 +1,18 @@
+{% extends "@DOMJudge/jury/base.html.twig" %}
+{% import _self as self %}
+{% import "@DOMJudge/jury/jury_macros.twig" as macros %}
+
+{% block title %}Prints - {{ parent() }}{% endblock %}
+
+{% block extrahead %}
+    {{ parent() }}
+    {{ macros.table_extrahead() }}
+{% endblock %}
+
+{% block content %}
+
+    <h1>Prints</h1>
+
+    {{ macros.table(prints, table_fields, num_actions) }}
+
+{% endblock %}

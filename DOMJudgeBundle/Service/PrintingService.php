@@ -105,7 +105,7 @@ class PrintingService
 
         $print = new PrintWithSourceCode();
         $print
-            ->setUserid($user->getUserid())
+            ->setUser($user)
             ->setTime($submitTime)
             ->setFilename($file->getClientOriginalName())
             ->setLangid($language)

@@ -10,7 +10,7 @@ use DOMJudgeBundle\Form\Type\PrintType;
 use DOMJudgeBundle\Service\DOMJudgeService;
 use DOMJudgeBundle\Service\ScoreboardService;
 use DOMJudgeBundle\Service\SubmissionService;
-use DOMJudgeBundle\Utils\Printing;
+use DOMJudgeBundle\Service\PrintingService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -51,22 +51,30 @@ class MiscController extends BaseController
     protected $submissionService;
 
     /**
+     * @var PrintingService
+     */
+    protected $ps;
+
+    /**
      * MiscController constructor.
      * @param DOMJudgeService        $dj
      * @param EntityManagerInterface $em
      * @param ScoreboardService      $scoreboardService
      * @param SubmissionService      $submissionService
+     * @param PrintingService        $ps
      */
     public function __construct(
         DOMJudgeService $dj,
         EntityManagerInterface $em,
         ScoreboardService $scoreboardService,
-        SubmissionService $submissionService
+        SubmissionService $submissionService,
+        PrintingService $ps
     ) {
         $this->dj                = $dj;
         $this->em                = $em;
         $this->scoreboardService = $scoreboardService;
         $this->submissionService = $submissionService;
+        $this->ps                = $ps;
     }
 
     /**
@@ -195,7 +203,7 @@ class MiscController extends BaseController
             /** @var UploadedFile $file */
             $file   = $data['code'];
             $langid = $data['langid'];
-            $user   = $this->getUser();
+            $user   = $this->dj->getUser();
             $printg = $this->ps->submitPrint($user, $langid, $file, null, $msg);
 
             return $this->render('@DOMJudge/team/print_result.html.twig', [
