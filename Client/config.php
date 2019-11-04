@@ -43,20 +43,34 @@ function sendToPrinter(string $filename, string $origname,
     // Map our language to enscript language:
     $lang_remap = array(
         'adb'    => 'ada',
+        'awk'    => 'awk',
         'bash'   => 'sh',
+        'c'      => 'c',
         'csharp' => 'c',
+        'cpp'    => 'cpp',
         'f95'    => 'f90',
         'hs'     => 'haskell',
+        'java'   => 'java',
         'js'     => 'javascript',
+        'kt'     => 'kt',
+        'lua'    => 'lua',
         'pas'    => 'pascal',
         'pl'     => 'perl',
+        'sh'     => 'sh',
+        'plg'    => 'prolog',
         'py'     => 'python',
         'py2'    => 'python',
         'py3'    => 'python',
+        'r'      => 'r',
         'rb'     => 'ruby',
+        'scala'  => 'scala',
+        'swift'  => 'swift',
+        'plain'  => null,
     );
     if (isset($language) && array_key_exists($language, $lang_remap)) {
         $language = $lang_remap[$language];
+    } else {
+        $language = null;
     }
     $highlight = "";
     if (! empty($language)) {
