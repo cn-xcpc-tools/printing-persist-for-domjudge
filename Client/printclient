@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php declare(strict_types=1);
+/**
+ * Generated from 'judgedaemon.in' on 2019年 04月 30日 星期二 14:36:42 CST.
+ *
+ * This is a wrapper script which sets the configuration and system
+ * paths and then calls the main judgedaemon code.
+ *
+ * Part of the DOMjudge Programming Contest Jury System and licensed
+ * under the GNU GPL. See README and COPYING for details.
+ */
+if (isset($_SERVER['REMOTE_ADDR'])) {
+    die("Commandline use only");
+}
+
+include 'main.php';
+

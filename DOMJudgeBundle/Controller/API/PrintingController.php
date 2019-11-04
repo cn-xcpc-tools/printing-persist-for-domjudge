@@ -99,7 +99,7 @@ class PrintingController extends FOSRestController
         $teamInfo = $user->getTeam();
         $team = $teamInfo == null
             ? "u" . $user->getUserid() . ": " . $user->getName()
-            : "t" . $teamInfo->getTeamid() . ": " . $teamInfo->getName() . " (" . $teamInfo->getRoom() . ")";
+            : "t" . $teamInfo->getTeamid() . ": " . $teamInfo->getName();
 
         return [
             'id' => $print->getPrintid(),
@@ -107,6 +107,7 @@ class PrintingController extends FOSRestController
             'filename' => $print->getFilename(),
             'lang' => $lang,
             'team' => $team,
+            'room' => $teamInfo == null ? null : $teamInfo->getRoom(),
             'processed' => true,
             'done' => true
         ];
@@ -166,7 +167,7 @@ class PrintingController extends FOSRestController
         $teamInfo = $user->getTeam();
         $team = $teamInfo == null
             ? "u" . $user->getUserid() . ": " . $user->getName()
-            : "t" . $teamInfo->getTeamid() . ": " . $teamInfo->getName() . " (" . $teamInfo->getRoom() . ")";
+            : "t" . $teamInfo->getTeamid() . ": " . $teamInfo->getName();
 
         return [
             'id' => $print->getPrintid(),
@@ -174,6 +175,7 @@ class PrintingController extends FOSRestController
             'lang' => $lang,
             'team' => $team,
             'filename' => $print->getFilename(),
+            'room' => $teamInfo == null ? null : $teamInfo->getRoom(),
             'processed' => true,
             'done' => false,
             'sourcecode' => base64_encode($print->getSourcecode())
