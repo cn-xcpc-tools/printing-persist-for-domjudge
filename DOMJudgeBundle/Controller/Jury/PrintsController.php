@@ -102,6 +102,18 @@ class PrintsController extends Controller
             $printdata['filename']['value'] = $print['filename'];
             $printdata['langid']['value'] = $print['langid'] === "" ? "plain" : $print['langid'];
 
+            if ($print['processed']) {
+                $printactions[] = [
+                    'icon' => 'copy',
+                    'title' => 'redo this print',
+                    'link' => $this->generateUrl('jury_prints_setundone', [
+                        'printId' => $print['printid'],
+                    ])
+                ];
+            } else {
+                $printactions[] = [];
+            }
+
             if ($print['done']) {
                 $printdata['status']['value'] = '<i class="far fa-check-circle"></i>';
                 $printdata['status']['sortvalue'] = '1';
@@ -134,7 +146,7 @@ class PrintsController extends Controller
             'refresh' => ['after' => 60, 'url' => $this->generateUrl('jury_prints')],
             'prints' => $prints_table,
             'table_fields' => $table_fields,
-            'num_actions' => 2,
+            'num_actions' => 3,
         ]);
     }
 
@@ -146,10 +158,27 @@ class PrintsController extends Controller
         $em = $this->em;
         $print = $em->getRepository(Prints::class)->find($printId);
         if (!$print) {
-            throw new NotFoundHttpException('balloon not found');
+            throw new NotFoundHttpException('printing not found');
         }
         $print->setDone(true);
         $print->setProcessed(true);
+        $em->flush();
+
+        return $this->redirectToRoute("jury_prints");
+    }
+
+    /**
+     * @Route("/{printId}/undone", name="jury_prints_setundone")
+     */
+    public function setUndoneAction(Request $request, int $printId)
+    {
+        $em = $this->em;
+        $print = $em->getRepository(Prints::class)->find($printId);
+        if (!$print) {
+            throw new NotFoundHttpException('printing not found');
+        }
+        $print->setDone(false);
+        $print->setProcessed(false);
         $em->flush();
 
         return $this->redirectToRoute("jury_prints");
