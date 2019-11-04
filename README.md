@@ -2,7 +2,9 @@
 
 Files are placed in `$INSTALLPATH/domserver/webapp/src/DOMJudgeBundle`.
 
-Such a piece of instruction should be executed first.
+If some file is existed there, please check the difference manually. After modifying an exisiting DOMjudge install, you may need to `rm -rf $INSTALLPATH/domserver/webapp/var/cache/prod`.
+
+Such a piece of SQL should be executed first.
 
 ```sql
 CREATE TABLE `print` (
@@ -15,6 +17,10 @@ CREATE TABLE `print` (
   `filename` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Filename as submitted',
   `langid` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'Language definition'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-```
 
-Not finished yet.
+ALTER TABLE `print` ADD PRIMARY KEY (`printid`);
+
+ALTER TABLE `print` MODIFY `printid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Unique ID', AUTO_INCREMENT=1;
+
+ALTER TABLE `print` ADD CONSTRAINT `delete_with_user` FOREIGN KEY (`userid`) REFERENCES `user`(`userid`) ON DELETE CASCADE ON UPDATE NO ACTION;
+```
