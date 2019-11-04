@@ -53,6 +53,12 @@ class PrintWithSourceCode
     private $sourcecode;
 
     /**
+     * @var boolean
+     * @ORM\Column(type="boolean", name="processed", options={"comment"="Has been printed?"}, nullable=false)
+     */
+    private $processed = false;
+
+    /**
      * @var string
      * @ORM\Column(type="string", name="filename", length=255, options={"comment"="Filename as submitted"}, nullable=false)
      */
@@ -178,6 +184,30 @@ class PrintWithSourceCode
     public function getDone()
     {
         return $this->done;
+    }
+
+    /**
+     * Set processed
+     *
+     * @param boolean $processed
+     *
+     * @return Prints
+     */
+    public function setProcessed($processed)
+    {
+        $this->processed = $processed;
+
+        return $this;
+    }
+
+    /**
+     * Get processed
+     *
+     * @return boolean
+     */
+    public function getProcessed()
+    {
+        return $this->processed;
     }
 
     /**
