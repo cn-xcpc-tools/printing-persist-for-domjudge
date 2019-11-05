@@ -1,8 +1,10 @@
 # Persisting Printing in DOMjudge database
 
-Files are placed in `$INSTALLPATH/domserver/webapp/src/DOMJudgeBundle`.
+For 7.0.x, Files in `DOMJudgeBundle` are placed in `$INSTALLPATH/domserver/webapp/src/DOMJudgeBundle`. If some file is existed there initially, please check the difference between those and 7.0.1 manually.
 
-If some file is existed there, please check the difference manually. After modifying an exisiting DOMjudge install, you may need to `rm -rf $INSTALLPATH/domserver/webapp/var/cache/prod`.
+For 7.1.1, Files in `App-7.1.1` are placed in `$INSTALLPATH/domserver/webapp/`. You can replace files arbitrarily.
+
+After modifying an existing DOMjudge install, you may need to `rm -rf $INSTALLPATH/domserver/webapp/var/cache/prod`.
 
 Such a piece of SQL should be executed first.
 
