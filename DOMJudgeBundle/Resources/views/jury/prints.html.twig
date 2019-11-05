@@ -2,7 +2,7 @@
 {% import _self as self %}
 {% import "@DOMJudge/jury/jury_macros.twig" as macros %}
 
-{% block title %}Prints - {{ parent() }}{% endblock %}
+{% block title %}Printings - {{ parent() }}{% endblock %}
 
 {% block extrahead %}
     {{ parent() }}
@@ -11,8 +11,14 @@
 
 {% block content %}
 
-    <h1>Prints</h1>
+    <h1>Printings</h1>
 
     {{ macros.table(prints, table_fields, num_actions) }}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <p>
+            {{ button(path('jury_prints_clean'), 'Clean finished prints', 'danger', 'trash-alt') }}
+        </p>
+    {% endif %}
 
 {% endblock %}

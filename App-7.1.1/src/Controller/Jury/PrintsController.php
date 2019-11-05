@@ -173,6 +173,19 @@ class PrintsController extends BaseController
     }
 
     /**
+     * @Route("/clean", name="jury_prints_clean")
+     * @IsGranted({"ROLE_ADMIN"})
+     */
+    public function cleanAction(Request $request)
+    {
+        $this->em->getConnection()->executeUpdate(
+            'DELETE FROM print WHERE done = 1'
+        );
+
+        return $this->redirectToRoute("jury_prints");
+    }
+
+    /**
      * @Route("/{printId}/undone", name="jury_prints_setundone")
      */
     public function setUndoneAction(Request $request, int $printId)
