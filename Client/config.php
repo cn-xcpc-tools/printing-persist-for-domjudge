@@ -12,7 +12,7 @@ define('balloon_username', 'balloon');
 define('balloon_password', 'ba1100n');
 define('balloon_endpoint', 'http://localhost/domjudge/api');
 define('balloon_autodone', true); // SET false if you want to handle the print document as sent by yourself
-define('balloon_waittask', false); // SET true if there aren't multiple printers
+define('balloon_waittask', true);
 
 
 /**
@@ -36,7 +36,7 @@ define('balloon_waittask', false); // SET true if there aren't multiple printers
  * easy identification. To prevent misuse the amount of pages per
  * job is limited to 10.
  */
-function sendToPrinter(string $filename, string $origname,
+function sendToPrinter($lpname, string $filename, string $origname,
     $language = null, string $username, $location = null)
 {
     global $exitsignalled;
@@ -76,6 +76,10 @@ function sendToPrinter(string $filename, string $origname,
     if (! empty($language)) {
         $highlight = "-E" . escapeshellarg($language);
     }
+    $printerset = "";
+    if (! empty($lpname)) {
+        $printerset = " -d " . escapeshellarg($lpname) . " ";
+    }
 
     $header = sprintf("Team: %s ", $username) .
               (!empty($location) ? "[".$location."]":"") .
@@ -83,10 +87,10 @@ function sendToPrinter(string $filename, string $origname,
 
     // For debugging or spooling to a different host.
     // Also uncomment '-p $tmp' below.
-    $tmp = tempnam('/tmp', 'print_'.$username.'_');
+    // $tmp = tempnam('/tmp', 'print_'.$username.'_');
 
     // You can add your printer giving rules here
-    $cmd = "enscript -C " . $highlight
+    $cmd = "enscript -C " . $highlight . $printerset
          . " -b " . escapeshellarg($header)
          . " -a 0-10 "
          . " -f Courier9 "
@@ -102,7 +106,7 @@ function sendToPrinter(string $filename, string $origname,
 
     $finished = false;
     while (balloon_waittask && !$finished) {
-        exec('lpq', $output2, $retval2);
+        exec('lpq' . (empty($lpname) ? '' : (' -P ' . escapeshellarg($lpname))), $output2, $retval2);
         if (strstr($output2[1], 'no entries') !== FALSE) {
             $finished = true;
         } else {

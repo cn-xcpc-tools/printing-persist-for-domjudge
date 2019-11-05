@@ -179,6 +179,24 @@ function error(string $string)
 
 
 /**
+ * Log a warning at level LOG_WARNING.
+ */
+function warning(string $string)
+{
+    logmsg(LOG_WARNING, "warning: $string");
+}
+
+
+/**
+ * Handle exceptions by calling error().
+ */
+function exception_handler(Throwable $e)
+{
+    error($e->getMessage() . ( (defined('DEBUG') && DEBUG) ? " in " . $e->getFile() . " line " . $e->getLine() : '' ));
+}
+
+
+/**
  * Decode a JSON string and handle errors.
  */
 function dj_json_decode(string $str)

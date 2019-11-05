@@ -7,6 +7,12 @@ if (isset($_SERVER['REMOTE_ADDR'])) {
 require_once 'config.php';
 require_once 'func.php';
 
+if (isset($argv[1])) {
+    $lpn = $argv[1];
+} else {
+    $lpn = null;
+}
+
 $waittime = 5;
 initsignals();
 read_credentials();
@@ -78,7 +84,7 @@ while (true) {
     $orig_filename = $row['filename'];
     $temp_filename = '/tmp/djpc_p' . $printid;
     file_put_contents($temp_filename, base64_decode($row['sourcecode']));
-    sendToPrinter($temp_filename, $orig_filename, $lang, $team, $room);
+    sendToPrinter($lpn, $temp_filename, $orig_filename, $lang, $team, $room);
     unlink($temp_filename);
     if (balloon_autodone) {
         request(sprintf('printing/set-done/%d', $printid), 'POST', '', false);
