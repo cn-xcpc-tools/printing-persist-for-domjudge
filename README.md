@@ -4,6 +4,8 @@ For 7.0.x, Files in `DOMJudgeBundle` are placed in `$INSTALLPATH/domserver/webap
 
 For 7.1.1, Files in `App-7.1.1` are placed in `$INSTALLPATH/domserver/webapp/`. You can replace files arbitrarily.
 
+For 7.3.3, Files in `App-7.3.3` are placed in `$INSTALLPATH/domserver/webapp/`. You can replace files arbitrarily.
+
 After modifying an existing DOMjudge install, you may need to `rm -rf $INSTALLPATH/domserver/webapp/var/cache/prod`.
 
 Such a piece of SQL should be executed first.
@@ -26,3 +28,4 @@ ALTER TABLE `print` MODIFY `printid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT CO
 
 ALTER TABLE `print` ADD CONSTRAINT `delete_with_user` FOREIGN KEY (`userid`) REFERENCES `user`(`userid`) ON DELETE CASCADE ON UPDATE NO ACTION;
 ```
+
