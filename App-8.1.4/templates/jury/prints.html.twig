@@ -1,0 +1,23 @@
+{% extends "jury/base.html.twig" %}
+{% import "jury/jury_macros.twig" as macros %}
+
+{% block title %}Printings - {{ parent() }}{% endblock %}
+
+{% block extrahead %}
+    {{ parent() }}
+    {{ macros.table_extrahead() }}
+{% endblock %}
+
+{% block content %}
+
+    <h1>Printings</h1>
+
+    {{ macros.table(prints, table_fields, num_actions) }}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <p>
+            {{ button(path('jury_prints_clean'), 'Clean finished prints', 'danger', 'trash-alt') }}
+        </p>
+    {% endif %}
+
+{% endblock %}

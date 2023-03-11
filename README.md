@@ -6,6 +6,16 @@ For 7.1.1, Files in `App-7.1.1` are placed in `$INSTALLPATH/domserver/webapp/`. 
 
 For 7.3.3, Files in `App-7.3.3` are placed in `$INSTALLPATH/domserver/webapp/`. You can replace files arbitrarily.
 
+For 8.1.4, Files in `App-8.1.4` are placed in `$INSTALLPATH/domserver/webapp/`. You can replace files arbitrarily. **After that**, you need to add these lines after `public static $classMap = array (`:
+
+```
+        'App\\Controller\\API\\PrintingController' => '/opt/domjudge/domserver/webapp/src/Controller/API/PrintingController.php',
+        'App\\Controller\\Jury\\PrintsController' => '/opt/domjudge/domserver/webapp/src/Controller/Jury/PrintsController.php',
+        'App\\Entity\\Prints' => '/opt/domjudge/domserver/webapp/src/Entity/Prints.php',
+        'App\\Entity\\PrintWithSourceCode' => '/opt/domjudge/domserver/webapp/src/Entity/PrintWithSourceCode.php',
+        'App\\Service\\PrintingService' => '/opt/domjudge/domserver/webapp/src/Service/PrintingService.php',
+```
+
 After modifying an existing DOMjudge install, you may need to `rm -rf $INSTALLPATH/domserver/webapp/var/cache/prod`.
 
 Such a piece of SQL should be executed first.
