@@ -6,7 +6,7 @@ For 7.1.1, Files in `App-7.1.1` are placed in `$INSTALLPATH/domserver/webapp/`. 
 
 For 7.3.3, Files in `App-7.3.3` are placed in `$INSTALLPATH/domserver/webapp/`. You can replace files arbitrarily.
 
-For 8.1.4, Files in `App-8.1.4` are placed in `$INSTALLPATH/domserver/webapp/`. You can replace files arbitrarily. **After that**, you need to add these lines after `public static $classMap = array (`:
+For 8.1.4, Files in `App-8.1.4` are placed in `$INSTALLPATH/domserver/webapp/`. You can replace files arbitrarily. **After that**, you need to add these lines after `public static $classMap = array (` in `/opt/domjudge/domserver/lib/vendor/composer/autoload_static.php`:
 
 ```
         'App\\Controller\\API\\PrintingController' => '/opt/domjudge/domserver/webapp/src/Controller/API/PrintingController.php',
